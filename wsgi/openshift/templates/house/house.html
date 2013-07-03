@@ -1,4 +1,15 @@
-<center><div style="background-color:orange;max-height:125px;max-width:150px;opacity:20%;">
-This div has max-height and max-width applied.
-</div>
+<center>
+	<div style="background-color:orange;max-height:125px;max-width:150px;opacity:20%;">
+		This div has max-height and max-width applied.
+	</div>
+	<br /> <br />
+	<form method="POST" action="/">
+	{% csrf_token %}
+		<input type="text" id="longurl" name="longurl" />
+		<input type="submit" />
+	</form>
+
+	{% if shorturl %}
+		<b>URL shortened to : </b> {{shorturl}}
+	{% endif %}
 </center>
