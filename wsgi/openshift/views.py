@@ -1,30 +1,52 @@
 import os
 from django.template import RequestContext
 from mappings.models import Mappings
-from django.http import HttpResponse
 from django.shortcuts import render,render_to_response,redirect,get_object_or_404
-from httplib import HTTPConnection
-import urllib2
 
 
-counter=0
+
+
 
 def home(request):
+	mapping = Mappings()
 	shorturl = None
 	if request.method=="POST":
-		mapping = Mappings()
+		
 		mapping.longurl = request.POST.get("longurl")
-		global counter 
-		counter += 13
-		mapping.shorturl = str(counter)
-		mapping.clicks=0
-		mapping.save()
-		shorturl = mapping.shorturl
-	return render_to_response('house/house.html',{"shorturl" : shorturl}, context_instance=RequestContext(request))
+		mapping.shorturl = mapping.shorten_url(mapping.longurl) 
+	
+		
+		try:
+			isLongPresent = Mappings.objects.get(longurl=str(mapping.longurl)).exists()
+		except:
+			isLongPresent = False
+		if isLongPresent is False:
+			try:
+				isShortPresent = Mappings.objects.get(shorturl=mapping.shorturl).exists()
+			except:
+				isShortPresent = False
+			if isShortPresent is False:
+				mapping.clicks = Mappings.objects.get(shorturl=mapping.shorturl).clicks
+				mapping.save()
+			else:
+				while isShortPresent is False:
+					mapping.shorturl = mapping.resolve_collision(mapping.longurl)
+					try:
+        		                        isShortPresent = Mappings.objects.get(shorturl=mapping.shorturl).exists()
+	                	        except:
+                                		isShortPresent = False
+
+		else:
+			mapping.shorturl = Mappings.objects.get(shorturl=mapping.shorturl).shorturl
+			mapping.clicks = Mappings.objects.get(shorturl=mapping.shorturl).clicks
+
+	return render_to_response('house/house.html',{"shorturl" : mapping.shorturl, "clicks" : mapping.clicks}, context_instance=RequestContext(request))
+
 
 def redirecter(request,shortened):
-#	thisone = Mappings.objects.filter(shorturl='ASDF')
-#	return redirect(thisone.longurl)
+	
 	mapping = get_object_or_404(Mappings,shorturl=shortened)
-	print mapping.longurl
+	mapping.clicks +=1
+	mapping.save()
+	print mapping.clicks
 	return redirect(mapping.longurl)

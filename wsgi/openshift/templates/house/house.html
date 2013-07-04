@@ -1,15 +1,29 @@
 <center>
-	<div style="background-color:orange;max-height:125px;max-width:150px;opacity:20%;">
-		This div has max-height and max-width applied.
+	{% load staticfiles %}
+	<br /><br /><br />
+	<div id="centerBackground" style="background-color:#1bde74;height:800x;max-width:800px;opacity:80%;">
+	
+		
+		<img src="{% static 'images/scissors.jpeg' %}" style="position:relative;top:40px;left:40px;float:left;"/>
+		<h1 style="position:relative; top:100;color:white;font-size:48px;font-family: Comic Sans MS, Helvetica, sans-serif;">URL Cutter</h1>
+
+	<br /> <br /> <br />
 	</div>
-	<br /> <br />
-	<form method="POST" action="/">
+	<form style="position:relative; top:120px; right:250px;" method="POST" action="/">
 	{% csrf_token %}
 		<input type="text" id="longurl" name="longurl" />
-		<input type="submit" />
-	</form>
+		<input type="Submit" />
+	</form>	
+
 
 	{% if shorturl %}
-		<b>URL shortened to : </b> {{shorturl}}
-	{% endif %}
+
+	<div  style="position:relative; top:200; background-color:#1bde74;height:800x;max-width:800px;opacity:80%;">
+	<br/>
+        <p style="color:white;"><b> URL shortened to : <a href="{{shorturl}}">http://tiny-vipassana.rhcloud.com/{{shorturl}}</a> </b></p>
+	<p style="color:white;"><b>Number of clicks : {{clicks}}</b></p>
+	<br />
+	</div>
+{% endif %}
 </center>
+
