@@ -93,8 +93,8 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/var/lib/openshift/51d182044382ec596a000146/app-root/runtime/repo/wsgi/openshift/static',
-#    '/home/vipassana/GitHub/tiny/wsgi/openshift/static',    
+#    '/var/lib/openshift/51d182044382ec596a000146/app-root/runtime/repo/wsgi/openshift/static',
+    '/home/vipassana/GitHub/tiny/wsgi/openshift/static',    
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
