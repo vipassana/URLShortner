@@ -80,11 +80,11 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATIC_ROOT = ''#os.path.join(PROJECT_DIR, 'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://tiny-vipassana.rhcloud.com/openshift/static/'
+STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -93,6 +93,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    '/var/lib/openshift/51d182044382ec596a000146/app-root/runtime/repo/wsgi/openshift/static',
 #    '/home/vipassana/GitHub/tiny/wsgi/openshift/static',    
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
